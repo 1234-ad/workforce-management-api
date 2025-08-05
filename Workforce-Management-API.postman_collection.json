@@ -1,0 +1,318 @@
+{
+	"info": {
+		"_postman_id": "workforce-mgmt-api",
+		"name": "Workforce Management API",
+		"description": "Complete API collection for testing all features of the Workforce Management API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Basic Task Operations",
+			"item": [
+				{
+					"name": "Get All Tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/tasks",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tasks"]
+						}
+					}
+				},
+				{
+					"name": "Create Task",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-User-ID",
+								"value": "manager1"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Complete customer onboarding\",\n    \"description\": \"Onboard new customer ABC Corp\",\n    \"startDate\": \"2025-08-05\",\n    \"dueDate\": \"2025-08-08\",\n    \"assignedStaffId\": \"staff1\",\n    \"assignedStaffName\": \"John Doe\",\n    \"priority\": \"HIGH\",\n    \"customerRef\": \"ABC-001\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tasks",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tasks"]
+						}
+					}
+				},
+				{
+					"name": "Get Task by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/tasks/{{taskId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tasks", "{{taskId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Priority Management",
+			"item": [
+				{
+					"name": "Get Tasks by Priority - HIGH",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/tasks/priority/HIGH",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tasks", "priority", "HIGH"]
+						}
+					}
+				},
+				{
+					"name": "Get Tasks by Priority - MEDIUM",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/tasks/priority/MEDIUM",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tasks", "priority", "MEDIUM"]
+						}
+					}
+				},
+				{
+					"name": "Update Task Priority",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-User-ID",
+								"value": "manager1"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"priority\": \"HIGH\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tasks/{{taskId}}/priority",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tasks", "{{taskId}}", "priority"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Comments & Activity",
+			"item": [
+				{
+					"name": "Add Comment to Task",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"Task is progressing well. Customer has been contacted.\",\n    \"userId\": \"staff1\",\n    \"userName\": \"John Doe\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tasks/{{taskId}}/comments",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tasks", "{{taskId}}", "comments"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "4. Smart Date Filtering",
+			"item": [
+				{
+					"name": "Get Today's Tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/tasks/today",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tasks", "today"]
+						}
+					}
+				},
+				{
+					"name": "Get Tasks by Date Range",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/tasks/date-range?startDate=2025-08-05&endDate=2025-08-06",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tasks", "date-range"],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2025-08-05"
+								},
+								{
+									"key": "endDate",
+									"value": "2025-08-06"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "5. Staff Management",
+			"item": [
+				{
+					"name": "Get Tasks by Staff",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/tasks/staff/staff1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tasks", "staff", "staff1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "6. Task Reassignment (Bug Fix)",
+			"item": [
+				{
+					"name": "Create Task for Reassignment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-User-ID",
+								"value": "manager1"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Customer support task\",\n    \"description\": \"Handle customer support request\",\n    \"startDate\": \"2025-08-05\",\n    \"dueDate\": \"2025-08-07\",\n    \"assignedStaffId\": \"staff1\",\n    \"assignedStaffName\": \"John Doe\",\n    \"priority\": \"MEDIUM\",\n    \"customerRef\": \"SUPPORT-123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tasks",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tasks"]
+						}
+					}
+				},
+				{
+					"name": "Reassign Task by Customer Ref",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-User-ID",
+								"value": "manager1"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"newStaffId\": \"staff2\",\n    \"newStaffName\": \"Jane Smith\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tasks/assign-by-ref/SUPPORT-123",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tasks", "assign-by-ref", "SUPPORT-123"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "7. Status Management",
+			"item": [
+				{
+					"name": "Update Task Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-User-ID",
+								"value": "manager1"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/tasks/{{taskId}}/status?status=COMPLETED",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tasks", "{{taskId}}", "status"],
+							"query": [
+								{
+									"key": "status",
+									"value": "COMPLETED"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Cancel Task",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-User-ID",
+								"value": "manager1"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/tasks/{{taskId}}/status?status=CANCELLED",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tasks", "{{taskId}}", "status"],
+							"query": [
+								{
+									"key": "status",
+									"value": "CANCELLED"
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "taskId",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
